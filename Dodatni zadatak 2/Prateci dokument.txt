@@ -1,0 +1,56 @@
+b) 
+MASTER 8259
+IR5 - prekidac
+IR6 - INT signal koji generise slave
+CAS - magistrala kaskadnih linija koja povezuje master i slave
+D - magistrala podataka
+CS - dekodirani signal sa adrese date u zadataku
+WR - dekodirani signal sa procesora 8086
+RD - dekodirani signal sa procesora 8086
+A0 - lecovani signal Q1 sa adresne magistrale procesora
+SP/EN - logicka 1 da se oznaci da je master kontroler
+INT - INTR signal sa procesora 8086
+INTA - INTA signal sa procesora 8086
+
+SLAVE 8259
+IR3 - prekidac
+-- sve ostalo isto kao kod mastera, osim SP ulaza koji je na 0 i CS signala koji je sa odgovarajuceg dekodera
+
+c)
+	PORTA EQU 58h
+	PORTB EQU 5Ah
+	PORTC EQU 5Ch
+	CW    EQU 5Eh
+	
+	MASTER_A0 EQU 34h
+	MASTER_A1 EQU 36h
+	
+	SLAVE_A0 EQU 38h
+	SLAVE_A1 EQU 3Ah
+	
+	ICW1 EQU 11h
+	ICW2_MASTER EQU 0B0h
+	ICW2_SLAVE EQU 0A8h
+	
+	ICW3_MASTER EQU 01000000b
+	ICW3_SLAVE EQU 00000110b
+	
+	ICW4_MASTER EQU 00000001b
+	ICW4_SLAVE  EQU 00000001b ; specifikacija kaze slave ne moze biti u AEOI modu
+	
+	OCW1_MASTER EQU 10011111b
+	OCW1_SLAVE  EQU 11110111b
+
+	OCW2_MASTER EQU 10000000b
+	OCW2_SLAVE  EQU 01000000b
+	
+	CIFRE DB 11000000B
+	      DB 11111001B
+	      DB 10100100B
+	      DB 10110000B
+	      DB 10011001B
+	      DB 10010010B
+	      DB 10000010B
+	      DB 11011000B
+	      DB 10000000B
+	      DB 10010000B
